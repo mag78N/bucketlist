@@ -33,12 +33,20 @@
         <list-item
           v-if="!isEdited"
           :title="goal.title"
-          :content="goal.description"></list-item>
+          :content="goal.description"
+          :newGoal="editedGoal"
+          @editGoalText="newGoal = $event"></list-item>
         <list-item-edit
           v-if="isEdited"
           :title="goal.title"
-          :content="goal.description"></list-item-edit>
-          <button class="small" @click="showEditForm()">Edit</button>
+          :content="goal.description"
+          :newGoal="editedGoal"
+          @editGoalText="newGoal = $event"
+          @editState="edited = $event"></list-item-edit>
+          <button
+            v-if="!isEdited"
+            class="small"
+            @click="showEditForm()">Edit</button>
       </li>
     </ol>
   </div>
@@ -64,6 +72,8 @@ export default {
       goals: [],
       addedGoal: false,
       isEdited: false,
+      editedGoal: '',
+      newGoal: '',
     };
   },
   methods: {

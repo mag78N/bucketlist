@@ -14,7 +14,7 @@ export default {
       goalContent: this.content,
     };
   },
-  props: ['title', 'content'],
+  props: ['title', 'content', 'newGoal'],
   methods: {
     showEditForm() {
       this.isEdited = true;

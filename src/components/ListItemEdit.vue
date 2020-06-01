@@ -2,8 +2,9 @@
   <div class="edit-item">
     <form id="edit-form">
       <div class="form-group">
-        <p>Goal: {{ title }}</p>
-        <input id="goal"
+        <p v-if="!editedGoal">{{ title }}</p>
+        <p v-else>{{ editedGoal }}</p>
+        <input id="editedGoal"
                type="text"
                v-model="editedGoal">
       </div>
@@ -35,21 +36,27 @@
 export default {
   data() {
     return {
-      goal: '',
+      editedGoal: '',
       description: '',
       isDone: false,
-      editedGoal: '',
       editFinished: false,
     };
   },
-  props: ['title', 'content'],
+  props: ['title', 'content', 'newGoal'],
   methods: {
-    editGoal(goal) {
-      this.editedGoal = goal;
+    editGoal() {
+      this.$emit('editGoalText', this.editedGoal);
       this.editFinished = true;
+      this.isEdited = false;
+      this.$emit('editState', this.isEdited);
     },
     cancel() {
       this.isEdited = false;
+    },
+  },
+  computed: {
+    goalAfterEdit() {
+      return this.editedGoal;
     },
   },
   directives: {
